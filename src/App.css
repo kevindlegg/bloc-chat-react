@@ -8,10 +8,8 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+  color: #4A4A4B;
+  font-size: 26px;
 }
 
 .App-title {
@@ -22,7 +20,33 @@
   font-size: large;
 }
 
+#App-nav {
+  width: 25%;
+  height: 100vh;
+  padding: 20px;
+  text-align: left;
+  background-color: #DDDDDD;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.Rooms-nav {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.Rooms-nav ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.Room-link {
+  padding-bottom: 20px;
+}
+.Room-link a {
+  color: #959596;
+  text-decoration: none;
 }
