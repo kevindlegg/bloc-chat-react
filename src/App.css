@@ -1,52 +1,5 @@
-
-
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  margin: 0;
-  display: inline-block;
-  color: #4A4A4B;
-  font-size: 32px;
-}
-
 .App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-#App-nav {
-  float: left;
-  width: 25%;
-  height: 100vh;
-  padding: 20px;
-  text-align: left;
-  background-color: #DDDDDD;
-}
-
-#App-main {
-  float: left;
-  width: 70%;
-  height: 100vh;
-}
-
-#app-header-add-button {
-  margin-left: 20px;
-  font-size: 20px;
-  padding: 14px;
-  float: right;
-  background-color: #E6E7E9;
-  border-style: none;
-  border-radius: 5px;
+  font-size: 32px;
 }
 
 @keyframes App-logo-spin {
@@ -54,17 +7,23 @@
   to { transform: rotate(360deg); }
 }
 
-.Rooms-nav {
-  font-size: 28px;
+.col-sm-3 {
+  background-color: #E7E7E9;
 }
 
-.Rooms-nav ul {
+.col-sm-8 {
+}
+
+.Rooms-nav a {
+
+}
+
+ul {
   padding: 0;
   list-style-type: none;
 }
 
 .Room-link {
-  padding-bottom: 20px;
 }
 
 .Room-link a {
@@ -82,35 +41,8 @@
   height: 220px;
 }
 
-#new-room-form>p {
-  font-size: 20px;
-  color: #969AAF;
-  margin: 0;
-  padding-bottom: 10px;
-}
-
 #new-room {
-  font-size: 40px;
+  /* font-size: 40px;
   width: 100%;
-  border-style: none;
-}
-
-#new-room-form button {
-  padding: 14px;
-  float: left;
-  display: inline;
-  margin-top: 10px;
-  font-size: 30px;
-  width: 50%;
-  border-style: none;
-}
-
-#new-room-cancel {
-  color: #95959B;
-  background-color: #DDDDDD;
-}
-
-#new-room-create {
-  color: white;
-  background-color: #969696;
+  border-style: none; */
 }

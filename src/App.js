@@ -18,11 +18,13 @@ import RoomList from './components/RoomList';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="row">
+      <div className="col-sm-3">
             <RoomList firebase={firebase} />
-        <div id="App-messages">
-          
-        </div>
+      </div>
+      <div className="col-sm-8">
+          Test
+      </div>
       </div>
     );
   }
