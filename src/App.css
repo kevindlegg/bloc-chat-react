@@ -1,5 +1,11 @@
+html, body, #root, .row {
+  width: auto;
+  height: 100vh;
+}
+
 .App-title {
   font-size: 32px;
+  font-weight: bold;
 }
 
 @keyframes App-logo-spin {

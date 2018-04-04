@@ -23,7 +23,7 @@ class App extends Component {
             <RoomList firebase={firebase} />
       </div>
       <div className="col-sm-8">
-          Test
+          Messages will go here
       </div>
       </div>
     );

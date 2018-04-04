@@ -18,15 +18,22 @@ class RoomList extends Component {
         this.setState({ rooms: this.state.rooms.concat( room ) });    
         });
     }
+
+    handleNewRoomAdd(newRoom) {
+        if(newRoom) {
+            console.log('Testing new room');
+        }
+
+    }
  
     render() {
         return(
         <div className="Room-list">
             <h1 className="App-title">Bloc Chat</h1>
-            <div class="input-group mb-3">
-                <input type="text" className="form-control" placeholder="New room name" />
+            <div className="input-group mb-3">
+                <input type="text" className="form-control" placeholder="New room name" name="newRoom" />
                 <div className="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button">Add room</button>
+                    <button className="btn btn-outline-secondary" type="button" onClick={this.handleNewRoomAdd(this.newRoomnewRoom)} >Add room</button>
                 </div>
             </div>
             <ul className="Rooms-nav">
