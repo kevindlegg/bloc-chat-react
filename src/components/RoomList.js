@@ -5,8 +5,8 @@ class RoomList extends Component {
         super(props)
 
         this.state = {
-            rooms:[ ],
-            newRoom:''
+            rooms: [ ],
+            newRoom: ' '
         };
 
         this.roomsRef = this.props.firebase.database().ref('rooms');
@@ -21,37 +21,36 @@ class RoomList extends Component {
     }
 
     handleNewRoomInput(e) {
-        this.setState({ newRoom:e.target.value});
+        this.setState({ newRoom: e.target.value});
     }
 
     handleNewRoomAdd(e) {
         const newRoom = this.state.newRoom;
-        const roomExists = this.state.rooms.find(rooms => rooms.name === newRoom);
-        if(newRoom && !roomExists) {
+        if(newRoom) {
             this.roomsRef.push({
-                name:newRoom
+                name: newRoom
             });
-        } else {
-            alert('Already exists!!!!')
-        };
-
-        this.setState({ newRoom:''});
-
+            this.setState({ newRoom: ' '});
+        }
     }
- 
+
+    handleActiveRoom(room) {
+        this.setState({activeRoom:room});
+    }
+
     render() {
         return(
         <div className="Room-list">
             <h1 className="App-title">Bloc Chat</h1>
             <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="New room name" name="newRoom" value={this.state.newRoom} onChange={(e) => this.handleNewRoomInput(e)}/>
+                <input type="text" className="form-control" placeholder="New room name" name="newRoom" value={ this.state.newRoom } onChange={(e) => this.handleNewRoomInput(e)  }/>
                 <div className="input-group-append">
                     <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleNewRoomAdd(e)} >Add room</button>
                 </div>
             </div>
             <ul className="Rooms-nav">
                 { this.state.rooms.map( (room, index) =>
-                    <li className="Room-link" key={ index }><a href="#">{ room.name }</a></li>
+                    <li className="Room-link" key={ index } onClick={() => this.handleActiveRoom(room)}><a href="#">{ room.name }</a></li>
                 )}
             </ul>
         </div>
