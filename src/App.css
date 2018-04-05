@@ -17,11 +17,8 @@ html, body, #root, .row {
   background-color: #E7E7E9;
 }
 
-.col-sm-8 {
-}
-
-.Rooms-nav a {
-
+.Room-list {
+  margin: 10px;
 }
 
 ul {
@@ -29,26 +26,7 @@ ul {
   list-style-type: none;
 }
 
-.Room-link {
-}
-
 .Room-link a {
   color: #959596;
   text-decoration: none;
-}
-
-#new-room-form {
-  margin: 240px;
-  color: #4B4B4B;
-  text-align: left;
-  padding: 48px;
-  background: #D7D7D7;
-  width: 450px;
-  height: 220px;
-}
-
-#new-room {
-  /* font-size: 40px;
-  width: 100%;
-  border-style: none; */
 }

@@ -5,7 +5,8 @@ class RoomList extends Component {
         super(props)
 
         this.state = {
-            rooms: [ ]
+            rooms: [ ],
+            newRoom: ' '
         };
 
         this.roomsRef = this.props.firebase.database().ref('rooms');
@@ -19,11 +20,18 @@ class RoomList extends Component {
         });
     }
 
-    handleNewRoomAdd(newRoom) {
-        if(newRoom) {
-            console.log('Testing new room');
-        }
+    handleNewRoomInput(e) {
+        this.setState({ newRoom: e.target.value});
+    }
 
+    handleNewRoomAdd(e) {
+        const newRoom = this.state.newRoom;
+        if(newRoom) {
+            this.roomsRef.push({
+                name: newRoom
+            });
+            this.setState({ newRoom: ' '});
+        }
     }
  
     render() {
@@ -31,9 +39,9 @@ class RoomList extends Component {
         <div className="Room-list">
             <h1 className="App-title">Bloc Chat</h1>
             <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="New room name" name="newRoom" />
+                <input type="text" className="form-control" placeholder="New room name" name="newRoom" value={ this.state.newRoom } onChange={(e) => this.handleNewRoomInput(e)  }/>
                 <div className="input-group-append">
-                    <button className="btn btn-outline-secondary" type="button" onClick={this.handleNewRoomAdd(this.newRoomnewRoom)} >Add room</button>
+                    <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleNewRoomAdd(e)} >Add room</button>
                 </div>
             </div>
             <ul className="Rooms-nav">
