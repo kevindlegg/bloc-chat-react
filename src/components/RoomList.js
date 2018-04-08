@@ -5,8 +5,8 @@ class RoomList extends Component {
         super(props)
 
         this.state = {
-            rooms: [ ],
-            newRoom: ' '
+            rooms:[],
+            newRoom:''
         };
 
         this.roomsRef = this.props.firebase.database().ref('rooms');
@@ -26,31 +26,36 @@ class RoomList extends Component {
 
     handleNewRoomAdd(e) {
         const newRoom = this.state.newRoom;
-        if(newRoom) {
+        const roomExists = this.state.rooms.find(rooms => rooms.name === newRoom);
+        if(newRoom && !roomExists) {
             this.roomsRef.push({
                 name: newRoom
             });
-            this.setState({ newRoom: ' '});
-        }
+        } else {
+            alert('Already exists!!!!')
+        };
+        this.setState({ newRoom: ' '});
     }
 
-    handleActiveRoom(room) {
-        this.setState({activeRoom:room});
+    handleRoomSelect(room) {
+        this.props.setactiveroom(room);        
     }
 
     render() {
         return(
         <div className="Room-list">
             <h1 className="App-title">Bloc Chat</h1>
-            <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="New room name" name="newRoom" value={ this.state.newRoom } onChange={(e) => this.handleNewRoomInput(e)  }/>
-                <div className="input-group-append">
-                    <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleNewRoomAdd(e)} >Add room</button>
+            <form>
+                <div className="input-group mb-3">
+                    <input type="text" className="form-control" placeholder="New room name" name="newRoom" value={ this.state.newRoom } onChange={(e) => this.handleNewRoomInput(e)  }/>
+                    <div className="input-group-append">
+                        <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleNewRoomAdd(e)} >Add room</button>
+                    </div>
                 </div>
-            </div>
+            </form>
             <ul className="Rooms-nav">
                 { this.state.rooms.map( (room, index) =>
-                    <li className="Room-link" key={ index } onClick={() => this.handleActiveRoom(room)}><a href="#">{ room.name }</a></li>
+                    <li className="Room-link" key={ index } onClick={this.handleRoomSelect(room)} ><a href="#">{ room.name }</a></li>
                 )}
             </ul>
         </div>
