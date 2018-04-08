@@ -21,7 +21,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      activeRoom:[]      
+      activeRoom:''      
     };
     
   }
@@ -35,7 +35,7 @@ class App extends Component {
     return (
       <div className="row">
       <div className="col-sm-3">
-          <RoomList firebase={firebase} setactiveroom={() => this.setActiveRoom} activeroom={this.state.activeRoom} />
+          <RoomList firebase={firebase} setactiveroom={this.setActiveRoom} activeroom={this.state.activeRoom} />
       </div>
       <div className="col-sm-8">
           <MessageList activeroom={this.state.activeRoom} />

@@ -38,6 +38,8 @@ class RoomList extends Component {
     }
 
     handleRoomSelect(room) {
+        alert('handling select');
+        const test = room.name;
         this.props.setactiveroom(room);        
     }
 
@@ -55,7 +57,7 @@ class RoomList extends Component {
             </form>
             <ul className="Rooms-nav">
                 { this.state.rooms.map( (room, index) =>
-                    <li className="Room-link" key={ index } onClick={this.handleRoomSelect(room)} ><a href="#">{ room.name }</a></li>
+                    <li className="Room-link" key={ index } onClick={() => this.handleRoomSelect(room)} ><a href="#">{ room.name }</a></li>
                 )}
             </ul>
         </div>
