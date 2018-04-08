@@ -17,7 +17,7 @@ html, body, #root, .row {
   background-color: #E7E7E9;
 }
 
-.Room-list {
+.Room-list, .Message-list {
   margin: 10px;
 }
 

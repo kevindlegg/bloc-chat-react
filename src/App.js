@@ -21,13 +21,13 @@ class App extends Component {
     super(props)
 
     this.state = {
-      activeRoom:''      
+      activeRoom:[]     
     };
     
+    this.setActiveRoom = this.setActiveRoom.bind(this);
   }
 
   setActiveRoom(room) {
-    alert("I'm trying to setActiveRoom");
     this.setState({activeRoom:room});
   }
 

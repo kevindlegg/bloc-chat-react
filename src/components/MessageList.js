@@ -9,13 +9,10 @@ import React, { Component } from 'react';
             }
         }
 
-
-
-
     render() {
         return(
-            <div className="List-container">
-                {this.props.activeroom}
+            <div className="Message-list">
+                <h3 className="List-title">{this.props.activeroom.name}</h3>
             </div>
         )
     }

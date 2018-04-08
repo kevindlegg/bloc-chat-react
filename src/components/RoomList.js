@@ -38,8 +38,6 @@ class RoomList extends Component {
     }
 
     handleRoomSelect(room) {
-        alert('handling select');
-        const test = room.name;
         this.props.setactiveroom(room);        
     }
 
