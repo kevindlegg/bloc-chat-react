@@ -37,8 +37,8 @@ class RoomList extends Component {
         this.setState({ newRoom: ' '});
     }
 
-    handleRoomSelect(room) {
-        this.props.setactiveroom(room);        
+    isCurrentRoom(room) {
+            return room === this.props.activeroom ? true : false;
     }
 
     render() {
@@ -55,7 +55,7 @@ class RoomList extends Component {
             </form>
             <ul className="Rooms-nav">
                 { this.state.rooms.map( (room, index) =>
-                    <li className="Room-link" key={ index } onClick={() => this.handleRoomSelect(room)} ><a href="#">{ room.name }</a></li>
+                    <li key={ index } onClick={() => this.props.setactiveroom(room)} ><a className={this.isCurrentRoom(room) ? "Room-link-active" : "Room-link"} href="#">{ room.name }</a></li>
                 )}
             </ul>
         </div>

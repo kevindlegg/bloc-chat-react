@@ -17,6 +17,10 @@ html, body, #root, .row {
   background-color: #E7E7E9;
 }
 
+.col-sm-9 {
+  padding: 0;
+}
+
 .Room-list, .Message-list {
   margin: 10px;
 }
@@ -26,7 +30,68 @@ ul {
   list-style-type: none;
 }
 
-.Room-link a {
+.Room-link {
+  padding: 2px;
   color: #959596;
   text-decoration: none;
+}
+
+.Room-link-active {
+  padding: 2px;
+  background-color: #959596;
+  color: #E7E7E9;
+  text-decoration: none;
+}
+
+.Room-link:hover {
+  padding: 2px;
+  color: #959596;
+  text-decoration: none;
+}
+
+.Room-link-active:hover {
+  padding: 2px;
+  background-color: #959596;
+  color: #E7E7E9;
+  text-decoration: none;
+}
+
+a.Room-message p {
+  padding: 0;
+  text-decoration: none;
+}
+
+.Message-list {
+  margin:0;
+}
+
+ul.Messages-nav li:nth-child(odd) {
+  background-color: #F6F7FB;
+  padding: 0px 5px 5px 5px;
+}
+
+ul.Messages-nav li:nth-child(even) {
+  background-color: #FFFFFF;
+  padding: 0px 5px 5px 5px;
+} 
+
+div.rightside-left-chat {
+  margin-right: 50px;
+  padding: 0px 20px 0px 20px;
+}
+
+div.rightside-left-chat p {
+  margin: 0;
+  padding: 0;
+}
+
+#message-time {
+  color: #A99F9D;
+  font-style: italic;
+  float:right;
+  background-color: transparent;
+}
+
+#message-author {
+  font-weight: bold;
 }
