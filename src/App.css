@@ -13,12 +13,27 @@ html, body, #root, .row {
   to { transform: rotate(360deg); }
 }
 
+.navbar {
+  background-color: #E6E6E8;
+  width: 100%;
+  height: 5%;
+  border-bottom: 1px solid black;
+}
+
+.Chat-container {
+  width: 100%;
+}
+
 .col-sm-3 {
+  float: left;
   background-color: #E7E7E9;
+  height: 100vh;
 }
 
 .col-sm-9 {
+  float: left;
   padding: 0;
+  height: 100vh;
 }
 
 .Room-list, .Message-list {
@@ -94,4 +109,12 @@ div.rightside-left-chat p {
 
 #message-author {
   font-weight: bold;
+}
+
+.List-title {
+  margin: 10px;
+}
+
+#display-name {
+  margin-left: 10px;
 }

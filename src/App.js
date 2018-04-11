@@ -3,6 +3,8 @@ import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
+import User from './components/User';
+
 
 
   // Initialize Firebase
@@ -21,25 +23,44 @@ class App extends Component {
     super(props)
 
     this.state = {
-      activeRoom:[]
+      activeRoom:[],
+      user:[]
     };
     
     this.setActiveRoom = this.setActiveRoom.bind(this);
+    this.setUser = this.setUser.bind(this);
   }
+
+  componentWillMount() {
+    this.initialState = this.state
+}
 
   setActiveRoom(room) {
     this.setState({activeRoom:room});
   }
 
+  setUser(user) {
+    if(user != this.state.user) {
+      this.setState(this.initialState);
+    }
+    
+    this.setState({user:user});
+  }
+
   render() {
     return (
       <div className="row">
-      <div className="col-sm-3">
-          <RoomList firebase={firebase} setactiveroom={this.setActiveRoom} activeroom={this.state.activeRoom} />
-      </div>
-      <div className="col-sm-9">
-          <MessageList firebase={firebase} activeroom={this.state.activeRoom} />
-      </div>
+        <div className="navbar navbar-default navbar-fixed-top">
+            <User firebase={firebase} setuser={this.setUser} user={this.state.user}/>
+        </div>
+        <div className="Chat-container">
+          <div className="col-sm-3">
+              <RoomList firebase={firebase} setactiveroom={this.setActiveRoom} activeroom={this.state.activeRoom} />
+          </div>
+          <div className="col-sm-9">
+              <MessageList firebase={firebase} activeroom={this.state.activeRoom} />
+          </div>
+        </div>
       </div>
     );
   }
