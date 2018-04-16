@@ -23,27 +23,18 @@ class App extends Component {
     super(props)
 
     this.state = {
-      activeRoom:[],
-      user:[]
+
     };
     
     this.setActiveRoom = this.setActiveRoom.bind(this);
     this.setUser = this.setUser.bind(this);
   }
 
-  componentWillMount() {
-    this.initialState = this.state
-}
-
   setActiveRoom(room) {
     this.setState({activeRoom:room});
   }
 
   setUser(user) {
-    if(user != this.state.user) {
-      this.setState(this.initialState);
-    }
-    
     this.setState({user:user});
   }
 
@@ -55,10 +46,10 @@ class App extends Component {
         </div>
         <div className="Chat-container">
           <div className="col-sm-3">
-              <RoomList firebase={firebase} setactiveroom={this.setActiveRoom} activeroom={this.state.activeRoom} />
+              <RoomList firebase={firebase} setactiveroom={this.setActiveRoom} activeroom={this.state.activeRoom} user={this.state.user} />
           </div>
           <div className="col-sm-9">
-              <MessageList firebase={firebase} activeroom={this.state.activeRoom} />
+              { this.state.activeRoom ? <MessageList firebase={firebase} activeroom={this.state.activeRoom} user={this.state.user} /> : null }
           </div>
         </div>
       </div>
