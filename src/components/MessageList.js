@@ -26,6 +26,7 @@ import Moment from 'react-moment';
         }
     
         handleNewMessageAdd(e) {
+            e.preventDefault(); // prevent default action
             if(this.state.newMessage) {
                 this.messagesRef.push({
                     content: this.state.newMessage,
@@ -61,7 +62,7 @@ import Moment from 'react-moment';
                 return(
                     <form id="message-input">
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" placeholder="New message" name="newMessage" onChange={(e) => this.handleNewMessageInput(e)} />
+                            <input type="text" className="form-control" placeholder="New message" name="newMessage" onChange={(e) => this.handleNewMessageInput(e)} value={this.state.newMessage}/>
                             <div className="input-group-append">
                                 <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleNewMessageAdd(e)} >Send</button>
                             </div>
@@ -75,7 +76,9 @@ import Moment from 'react-moment';
         return(
             <div className="wrap">
                 <h3 className="List-title">{this.props.activeroom.name}</h3>
+                <div id="list-messages">
                 {this.listMessages()}
+                </div>
                 {this.showAddMessage()}
             </div>
         )
