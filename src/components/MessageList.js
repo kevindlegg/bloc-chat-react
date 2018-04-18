@@ -7,7 +7,8 @@ import Moment from 'react-moment';
 
             this.state = {
                 messages:[],
-                newMessage:' '
+                newMessage:' ',
+                editingMessage:' '
             }
 
             this.messagesRef = this.props.firebase.database().ref('messages');
@@ -19,6 +20,12 @@ import Moment from 'react-moment';
                 message.key = snapshot.key;
             this.setState({ messages: this.state.messages.concat( message ) });    
             });
+
+            this.messagesRef.on('child_removed', snapshot => {
+                const message = snapshot.val();
+                message.key = snapshot.key;
+            this.setState({ messages: this.state.messages.filter( msg => msg.key !== message.key ) });    
+            });
         }
 
         handleNewMessageInput(e) {
@@ -26,18 +33,31 @@ import Moment from 'react-moment';
         }
     
         handleNewMessageAdd(e) {
-            e.preventDefault(); // prevent default action
+            e.preventDefault(); // prevent default action controls events   
             if(this.state.newMessage) {
                 this.messagesRef.push({
                     content: this.state.newMessage,
                     roomID: this.props.activeroom.key,
                     sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
-                    username: this.props.user.displayName
+                    username: (this.props.user ? this.props.displayName : "Guest")
                 });
             };
             this.setState({ newMessage: ' '});
         }
     
+        handleEditButton(e, key) {
+            console.log("Edit " + key);
+            this.setState({editingMessage:key})
+        }
+
+        handleEditMessageUpdate(e) {
+            console.log(e.target.value);
+        }
+
+        handleDeleteMessage(e, key) {
+            this.messagesRef.child(key).remove();
+        }
+
         listMessages() {
             if(this.props.activeroom.key) {
                 const msgs = this.state.messages.filter( (msgs, index) => msgs.roomID === this.props.activeroom.key);
@@ -49,7 +69,13 @@ import Moment from 'react-moment';
                         <div className="rightside-left-chat">
 							<span id="message-author">{message.username}</span>
                             <span id="message-time"><Moment format="lll">{message.sentAt}</Moment></span>
-							<p>{message.content}</p>
+                            <p> { (this.state.editingMessage && this.state.editingMessage === message.key) ? 
+							        <p>message.content</p> :
+                                    <input id="edit-message" name="updatedMessage" value={message.content} onChange={(e) => this.handleEditMessageUpdate(e)} />
+                                }
+                            </p> 
+                            <button className="message-action-button" type="submit" onClick={(e) => this.handleEditButton(e, message.key)}><i className="material-icons">mode_edit</i></button>
+                            <button className="message-action-button" type="submit" onClick={(e) => this.handleDeleteMessage(e, message.key)}><i className="material-icons">delete</i></button>
 						</div>
                         </li>
                     )}

@@ -150,3 +150,15 @@ div.rightside-left-chat p {
   overflow-y: scroll;
   max-height: 550px;
 }
+
+.message-action-button {
+  background: transparent;
+  border: none;
+  padding: 2px;
+  outline: none !important;
+}
+
+.material-icons {
+  font-size: 15px;
+  padding: 0;
+}
