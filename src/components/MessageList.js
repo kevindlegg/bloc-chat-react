@@ -32,7 +32,7 @@ import Moment from 'react-moment';
                     content: this.state.newMessage,
                     roomID: this.props.activeroom.key,
                     sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
-                    username: this.props.user.displayName
+                    username: (this.props.user ? this.props.user.displayName : "Guest")
                 });
             };
             this.setState({ newMessage: ' '});
