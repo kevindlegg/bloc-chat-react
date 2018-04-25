@@ -6,7 +6,9 @@ class RoomList extends Component {
 
         this.state = {
             rooms:[],
-            newRoom:''
+            newRoom:'',
+            editedKey:' ',
+            editedRoom:' '
         };
 
         this.roomsRef = this.props.firebase.database().ref('rooms');
@@ -16,7 +18,23 @@ class RoomList extends Component {
         this.roomsRef.on('child_added', snapshot => {
             const room = snapshot.val();
             room.key = snapshot.key;
-        this.setState({ rooms: this.state.rooms.concat( room ) });    
+            this.setState({ rooms: this.state.rooms.concat( room ) });
+        });
+
+        this.roomsRef.on('child_removed', snapshot => {
+            let room = snapshot.val();
+            room.key = snapshot.key;
+            this.setState({ rooms: this.state.rooms.filter( rm => rm.key !== room.key ) });
+            this.setState({newRoom: ' '});
+        });
+
+        this.roomsRef.on('child_changed', snapshot => {
+            const room = snapshot.val();
+            room.key = snapshot.key;
+            let rooms = this.state.rooms;
+            const foundIndex = this.state.rooms.map(rm => rm.key).indexOf(room.key);
+            rooms[foundIndex]=room;
+            this.setState({ rooms: rooms });    
         });
     }
 
@@ -41,6 +59,40 @@ class RoomList extends Component {
             return room === this.props.activeroom ? true : false;
     }
 
+    showButtons(room) {
+            return(
+            <div id="action-buttons">
+                <button className="room-action-button" type="submit" onClick={(e) => this.handleEditButton(e, room)}><i className="material-icons">mode_edit</i></button>
+                <button className="room-action-button" type="submit" onClick={(e) => this.handleDeleteRoom(e, room)}><i className="material-icons">delete</i></button>
+            </div>
+        )
+    }
+
+    handleEditButton(e, room) {
+        this.setState({ editedKey: room.key,
+                        editedRoom: room.name });
+    }
+
+    handleEditRoomUpdate(e, room) {
+        const updatedRoom = this.state.editedRoom;
+        this.roomsRef.child(room.key).update( {name: updatedRoom} );
+        this.setState({ editedKey:' ',
+                        editedRoom:' '});
+    }
+
+    handleEditRoomChange(e) {
+        this.setState({ editedRoom: e.target.value});
+    }
+
+    handleEditRoomCancel(e) {
+        this.setState({ editedKey:' ',
+                        editedRoom:' '});
+    }
+    
+    handleDeleteRoom(e, room) {
+        this.roomsRef.child(room.key).remove();
+    }
+
     render() {
         return(
         <div className="Room-list">
@@ -55,8 +107,20 @@ class RoomList extends Component {
             </form>
             <ul className="Rooms-nav">
                 { this.state.rooms.map( (room, index) =>
-                    <li key={ index } onClick={() => this.props.setactiveroom(room)} ><a className={this.isCurrentRoom(room) ? "Room-link-active" : "Room-link"} >{ room.name }</a></li>
+                    <li id="room-row" key={ index } >
+                    { (this.state.editedKey && this.state.editedKey === room.key) ?
+                        <div className="input-group mb-3">
+                                    <input type="text" className="form-control" name="editedRoom" onChange={(e) => this.handleEditRoomChange(e, room)} value={this.state.editedRoom}/>
+                                    <div className="input-group-append">
+                                        <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRoomUpdate(e, room)} ><i className="material-icons">done</i></button>
+                                        <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRoomCancel(e, room)} ><i className="material-icons">not_interested</i></button>
+                                    </div>
+                        </div> :
+                        <a className={this.isCurrentRoom(room) ? "Room-link-active" : "Room-link"} ><span onClick={() => this.props.setactiveroom(room)} >{ room.name }</span><span>{this.showButtons(room)}</span></a>
+                    }
+                    </li>
                 )}
+                
             </ul>
         </div>
         )
