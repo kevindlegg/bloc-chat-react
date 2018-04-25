@@ -57,6 +57,14 @@ ul {
   list-style-type: none;
 }
 
+#action-buttons {
+  display: none;
+}
+
+#room-row:hover div#action-buttons {
+  display: inline-block;
+}
+
 .Room-link {
   padding: 2px;
   color: #959596;
@@ -70,17 +78,8 @@ ul {
   text-decoration: none;
 }
 
-.Room-link:hover {
-  padding: 2px;
-  color: #959596;
-  text-decoration: none;
-}
-
-.Room-link-active:hover {
-  padding: 2px;
-  background-color: #959596;
-  color: #E7E7E9;
-  text-decoration: none;
+a.Room-link {
+  display: inline-block;
 }
 
 a.Room-message p {
@@ -149,4 +148,43 @@ div.rightside-left-chat p {
   flex-direction: column;
   overflow-y: scroll;
   max-height: 550px;
+}
+
+.message-action-button {
+  background: transparent;
+  border: none;
+  padding: 2px;
+  outline: none !important;
+}
+
+.material-icons {
+  font-size: 15px;
+  padding: 0;
+}
+
+#edit-message {
+  width: 100%;
+}
+
+.room-action-button {
+  background: transparent;
+  border: none;
+  padding: 2px;
+  outline: none !important;
+}
+
+/* #action-buttons {
+  display: inline-block;
+}
+
+#action-buttons button:hover {
+  display: inline-block;
+} */
+
+/* #action-buttons {
+  display: none;
+} */
+
+li#room-row:hover + div#action-buttons, div#action-buttons:hover {
+  display: inline-block;
 }

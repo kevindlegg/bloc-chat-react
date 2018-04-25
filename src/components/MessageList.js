@@ -7,7 +7,9 @@ import Moment from 'react-moment';
 
             this.state = {
                 messages:[],
-                newMessage:' '
+                newMessage:' ',
+                editedKey:' ',
+                editedMessage:' '
             }
 
             this.messagesRef = this.props.firebase.database().ref('messages');
@@ -19,6 +21,21 @@ import Moment from 'react-moment';
                 message.key = snapshot.key;
             this.setState({ messages: this.state.messages.concat( message ) });    
             });
+
+            this.messagesRef.on('child_removed', snapshot => {
+                const message = snapshot.val();
+                message.key = snapshot.key;
+            this.setState({ messages: this.state.messages.filter( msg => msg.key !== message.key ) });    
+            });
+
+            this.messagesRef.on('child_changed', snapshot => {
+                const message = snapshot.val();
+                message.key = snapshot.key;
+                let messages = this.state.messages;
+                const foundIndex = this.state.messages.map(msg => msg.key).indexOf(message.key);
+                messages[foundIndex]=message;
+                this.setState({ messages: messages });    
+            });
         }
 
         handleNewMessageInput(e) {
@@ -26,7 +43,7 @@ import Moment from 'react-moment';
         }
     
         handleNewMessageAdd(e) {
-            e.preventDefault(); // prevent default action
+            e.preventDefault(); // prevent default action controls events   
             if(this.state.newMessage) {
                 this.messagesRef.push({
                     content: this.state.newMessage,
@@ -38,6 +55,31 @@ import Moment from 'react-moment';
             this.setState({ newMessage: ' '});
         }
     
+        handleEditButton(e, key, message) {
+            this.setState({ editedKey: key,
+                            editedMessage: message});
+        }
+
+        handleEditMessageUpdate(e, key) {
+            const updatedContent = this.state.editedMessage;
+            this.messagesRef.child(key).update( {content: updatedContent} );
+            this.setState({ editedKey:' ',
+                            editedMessage:' '});
+        }
+
+        handleEditMessageChange(e) {
+            this.setState({ editedMessage: e.target.value});
+        }
+
+        handleEditMessageCancel(e) {
+            this.setState({ editedKey:' ',
+                            editedMessage:' '});
+        }
+        
+        handleDeleteMessage(e, key) {
+            this.messagesRef.child(key).remove();
+        }
+
         listMessages() {
             if(this.props.activeroom.key) {
                 const msgs = this.state.messages.filter( (msgs, index) => msgs.roomID === this.props.activeroom.key);
@@ -49,12 +91,35 @@ import Moment from 'react-moment';
                         <div className="rightside-left-chat">
 							<span id="message-author">{message.username}</span>
                             <span id="message-time"><Moment format="lll">{message.sentAt}</Moment></span>
-							<p>{message.content}</p>
+                            { (this.state.editedKey && this.state.editedKey === message.key) ? 
+                                <div className="input-group mb-3">
+                                    <input type="text" className="form-control" name="editedMessage" onChange={(e) => this.handleEditMessageChange(e, message.key)} value={this.state.editedMessage}/>
+                                    <div className="input-group-append">
+                                        <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditMessageUpdate(e, message.key, message.content)} ><i className="material-icons">done</i></button>
+                                        <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditMessageCancel(e, message.key)} ><i className="material-icons">not_interested</i></button>
+                                    </div>
+                                </div> :
+                                <p>
+                                {message.content}
+                                </p>
+                            }
+                            { this.showButtons(message)}
 						</div>
                         </li>
                     )}
                 </ul>)
             }}
+        }
+
+        showButtons(message) {
+            if (message.username === this.props.user.displayName) {
+                return(
+                    <p>
+                        <button className="message-action-button" type="submit" onClick={(e) => this.handleEditButton(e, message.key, message.content)}><i className="material-icons">mode_edit</i></button>
+                        <button className="message-action-button" type="submit" onClick={(e) => this.handleDeleteMessage(e, message.key)}><i className="material-icons">delete</i></button>
+                    </p>
+                )
+            }
         }
 
         showAddMessage() {
