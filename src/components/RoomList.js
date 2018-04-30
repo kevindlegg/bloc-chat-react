@@ -43,6 +43,7 @@ class RoomList extends Component {
     }
 
     handleNewRoomAdd(e) {
+        e.preventDefault();
         const newRoom = this.state.newRoom;
         const roomExists = this.state.rooms.find(rooms => rooms.name === newRoom);
         if(newRoom && !roomExists) {
